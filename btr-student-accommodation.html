@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build-to-Rent & Student Accommodation — Income-Led Real Estate at Scale — A.P.Property</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Manrope",sans-serif;background:#fff;color:#0D1117;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:root{--navy:#0A1628;--navy2:#0E1F38;--steel:#2F5B7C;--steel2:#3D6E93;--mist:#6E8FA8;--gold:#C6A86B;--gold2:#D4BC89;--white:#fff;--off:#F6F7F9;--grey:#8A929E;--ink:#0D1117;--border:#E4E7EB}
+a{color:inherit;text-decoration:none}
+a:visited{color:inherit}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;transition:background .4s}
+nav.solid{background:rgba(10,22,40,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06)}
+.logo,.nav-logo{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:400;letter-spacing:.05em;color:#fff!important;text-decoration:none!important;display:flex!important;align-items:center!important}
+.logo em{font-style:italic}
+.nav-links{display:flex;align-items:center;gap:40px;list-style:none}
+.nav-links a{font-size:11.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{color:#fff!important;border:1px solid rgba(255,255,255,.28);padding:11px 26px}
+.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.nav-burger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);transition:transform .3s,opacity .3s}
+.nav-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+/* HERO */
+.art-hero{position:relative;padding:160px 64px 96px;background:linear-gradient(160deg,#080F1E 0%,#0C1A30 40%,#0E2040 100%);overflow:hidden}
+.art-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 65% 35%,rgba(47,91,124,.25) 0%,transparent 55%)}
+.art-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(47,91,124,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(47,91,124,.05) 1px,transparent 1px);background-size:64px 64px}
+.art-hero-inner{position:relative;z-index:2;max-width:860px;margin:0 auto}
+.art-back{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;margin-bottom:36px;transition:color .2s}
+.art-back:hover{color:rgba(255,255,255,.8)}
+.art-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.art-meta{display:flex;align-items:center;gap:14px;margin-bottom:28px;flex-wrap:wrap}
+.art-cat{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:5px 14px;background:rgba(47,91,124,.25);color:var(--mist);border:1px solid rgba(47,91,124,.3)}
+.art-date{font-size:11px;color:rgba(255,255,255,.35);font-weight:500}
+.art-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.2)}
+.art-read{font-size:11px;color:rgba(255,255,255,.35);font-weight:500}
+.art-hero h1{font-family:"Cormorant Garamond",serif;font-size:clamp(36px,5vw,66px);font-weight:300;line-height:1.04;letter-spacing:-.02em;color:#fff;margin-bottom:24px}
+.art-hero-sub{font-size:17px;font-weight:300;line-height:1.75;color:rgba(255,255,255,.5);max-width:620px;margin-bottom:40px}
+.art-share{display:flex;align-items:center;gap:12px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap}
+.share-label{font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.share-btn{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;text-decoration:none;transition:opacity .2s;cursor:pointer;border:none;font-family:"Manrope",sans-serif}
+.share-linkedin{background:rgba(10,102,194,.15);color:#5B9BD5;border:1px solid rgba(10,102,194,.25)}
+.share-copy{background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12)}
+/* BODY */
+.art-body{max-width:1280px;margin:0 auto;padding:96px 64px;display:grid;grid-template-columns:1fr 300px;gap:96px;align-items:start}
+.art-content h2{font-family:"Cormorant Garamond",serif;font-size:clamp(26px,3vw,36px);font-weight:400;line-height:1.1;letter-spacing:-.01em;color:var(--ink);margin-top:52px;margin-bottom:18px}
+.art-content h2:first-child{margin-top:0}
+.art-content h3{font-size:17px;font-weight:700;color:var(--ink);margin-top:36px;margin-bottom:14px}
+.art-content p{font-size:16px;line-height:1.85;color:#3A4250;margin-bottom:20px}
+.art-content ul{list-style:none;margin:0 0 24px;padding:0}
+.art-content ul li{font-size:15px;line-height:1.8;color:#3A4250;padding:10px 0 10px 20px;border-bottom:1px solid var(--border);position:relative}
+.art-content ul li:first-child{border-top:1px solid var(--border)}
+.art-content ul li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--steel);position:absolute;left:0;top:18px}
+.art-pullquote{border-left:3px solid var(--gold);padding:22px 28px;margin:36px 0;background:linear-gradient(to right,rgba(198,168,107,.04),transparent)}
+.art-pullquote p{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:400;font-style:italic;line-height:1.55;color:var(--ink);margin:0}
+.art-takeaways{background:var(--navy);padding:36px 40px;margin:36px 0}
+.art-takeaways h4{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.art-takeaways h4::before{content:"";width:20px;height:1px;background:var(--gold)}
+.art-takeaways ul{list-style:none;padding:0;margin:0}
+.art-takeaways ul li{font-size:14px;color:rgba(255,255,255,.65);line-height:1.7;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;gap:12px}
+.art-takeaways ul li:last-child{border-bottom:none}
+.art-takeaways ul li::before{content:"→";color:var(--gold);flex-shrink:0;font-size:13px}
+.art-takeaways ul li::marker{display:none}
+/* SIDEBAR */
+.art-sidebar{position:sticky;top:96px}
+.sidebar-card{border:1px solid var(--border);margin-bottom:20px;overflow:hidden}
+.sidebar-card-hd{background:var(--navy);padding:18px 22px;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.sidebar-card-body{padding:20px 22px}
+.art-info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.art-info-row:last-child{border-bottom:none}
+.aik{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--grey)}
+.aiv{font-size:12.5px;font-weight:600;color:var(--ink)}
+.sidebar-share{display:flex;flex-direction:column;gap:10px;padding:20px 22px}
+.ssb{display:flex;align-items:center;gap:12px;padding:13px 16px;font-family:"Manrope",sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:background .2s}
+.ssb-linkedin{background:rgba(10,102,194,.08);color:#0A66C2;border:1px solid rgba(10,102,194,.18)}
+.ssb-copy{background:var(--off);color:var(--grey);border:1px solid var(--border)}
+.ssb svg{width:16px;height:16px}
+/* RELATED */
+.related-articles{background:var(--off);padding:80px 64px;border-top:1px solid var(--border)}
+.related-inner{max-width:1280px;margin:0 auto}
+.related-hd{margin-bottom:48px}
+.related-hd h2{font-family:"Cormorant Garamond",serif;font-size:clamp(26px,3vw,38px);font-weight:400;color:var(--ink)}
+.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.rel-card{background:#fff;text-decoration:none;color:inherit;padding:28px;display:flex;flex-direction:column;transition:background .2s;position:relative;overflow:hidden}
+.rel-card:hover{background:#FAFBFD}
+.rel-card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--steel);transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.rel-card:hover::after{transform:scaleX(1)}
+.rel-cat{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;display:block}
+.rel-card h3{font-family:"Cormorant Garamond",serif;font-size:19px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:8px}
+.rel-card p{font-size:12.5px;color:var(--grey);line-height:1.65;flex:1;margin-bottom:14px}
+.rel-cta{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin-top:auto}
+/* FOOTER */
+footer{background:#050D18;padding:72px 64px 36px;border-top:1px solid rgba(255,255,255,.04)}
+.ft{max-width:1280px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:64px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:28px}
+.ft-logo{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:400;color:#fff;margin-bottom:14px}
+.ft-logo em{font-style:italic}
+.ft-desc{font-size:13px;color:rgba(255,255,255,.28);line-height:1.75;max-width:280px;margin-bottom:16px}
+.ft-tag{font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--steel)}
+.ft-col h4{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:18px}
+.ft-col ul{list-style:none}
+.ft-col li{margin-bottom:10px}
+.ft-col a{font-size:13.5px;color:rgba(255,255,255,.38);text-decoration:none;transition:color .2s}
+.ft-col a:hover{color:rgba(255,255,255,.78)}
+.ft-bot{display:flex;justify-content:space-between;align-items:center}
+.ft-copy{font-size:12px;color:rgba(255,255,255,.18)}
+.ft-legal{display:flex;gap:24px}
+.ft-legal a{font-size:12px;color:rgba(255,255,255,.18);text-decoration:none}
+@media(max-width:1024px){.art-body{grid-template-columns:1fr;gap:56px}.art-sidebar{position:relative;top:auto}.rel-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){nav{padding:0 24px;height:64px}.nav-burger{display:flex}.nav-links{position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(8,15,28,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:36px;transform:translateX(100%);transition:transform .35s;z-index:299}.nav-links.open{transform:translateX(0)}.nav-links a{font-size:16px}.nav-cta{border:1px solid rgba(255,255,255,.25);padding:14px 36px}body.nav-open{overflow:hidden}.art-hero{padding:120px 24px 72px}.art-hero h1{font-size:clamp(32px,9vw,50px)}.art-hero-sub{font-size:15px}.art-body{padding:56px 24px}.art-content p{font-size:15px}.related-articles{padding:56px 24px}.rel-grid{grid-template-columns:1fr}footer{padding:56px 24px 32px}.ft-top{grid-template-columns:1fr;gap:32px}.ft-bot{flex-direction:column;align-items:flex-start;gap:16px}}
+
+.reveal.in, .rev.in {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+
+/* REVEAL ANIMATION - with guaranteed fallback */
+.reveal, .rev {
+  opacity:1;
+  transform:none;
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal.in, .rev.in {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+</style>
+<style>
+.reveal,.rev,.reveal.in,.rev.in,
+[class*="reveal"],[class*=" rev"]{
+  opacity:1!important;
+  transform:none!important;
+  transition:none!important;
+  visibility:visible!important;
+}
+</style>
+<style>
+.nav-dropdown { position: relative; }
+.nav-dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: rgba(10,22,40,.97); border: 1px solid rgba(255,255,255,.1); min-width: 160px; padding: 8px 0; z-index: 9999; backdrop-filter: blur(20px); }
+.nav-dropdown-menu li { list-style: none; }
+.nav-dropdown-menu a { display: block; padding: 10px 20px; color: rgba(255,255,255,.8); font-size: 13px; letter-spacing: .04em; text-decoration: none; transition: color .2s; }
+.nav-dropdown-menu a:hover { color: #fff; }
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="index.html" class="logo nav-logo"><img src="data:image/png;base64,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" alt="" style="height:26px;width:auto;margin-right:10px;vertical-align:middle;opacity:.92;position:relative;top:-1px"><em>A.P.</em> Property</a>
+  <ul class="nav-links" id="navLinks">
+    <li class="nav-dropdown">
+      <a href="market-australia.html" class="nav-dropdown-toggle">Markets</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="market-australia.html">Australia</a></li>
+        <li><a href="market-hongkong.html">Hong Kong</a></li>
+        <li><a href="market-china.html">China</a></li>
+        <li><a href="market-vietnam.html">Vietnam</a></li>
+      </ul>
+    </li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="insights.html">Insights</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="art-hero">
+  <div class="art-hero-grid"></div>
+  <div class="art-hero-inner">
+    <a href="insights.html" class="art-back">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Insights
+    </a>
+    <div class="art-meta">
+      <span class="art-cat">Sector Focus</span>
+      <span class="art-date">March 2026</span>
+      <span class="art-dot"></span>
+      <span class="art-read">6 min read</span>
+    </div>
+    <h1>Build-to-Rent & Student Accommodation — Income-Led Real Estate at Scale</h1>
+    <p class="art-hero-sub">Australia's residential market is shifting from fragmented ownership toward professionally managed, income-generating assets. Two sectors are at the centre of this transition.</p>
+    <div class="art-share">
+      <span class="share-label">Share</span>
+      <a href="https://www.linkedin.com/shareArticle?url=https://approperty.com.au/btr-student-accommodation.html" target="_blank" class="share-btn share-linkedin">
+        <svg style="width:12px;height:12px;fill:currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7H10v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <button onclick="copyLink()" class="share-btn share-copy">Copy Link</button>
+    </div>
+  </div>
+</section>
+
+<div class="art-body">
+  <div class="art-content">
+    <h2>The Structural Shift</h2>
+    <p>Australia's residential market is undergoing a structural evolution—shifting from fragmented ownership toward professionally managed, income-generating assets.</p>
+    <p>At the centre of this transition are two sectors: Build-to-Rent (BTR) and Purpose-Built Student Accommodation (PBSA).</p>
+    <h2>Student Accommodation</h2>
+    <p>Student accommodation continues to demonstrate one of the clearest demand profiles in global real estate. International student inflows, combined with limited dedicated supply, have created a market defined by high occupancy, consistent rental growth, and strong income visibility.</p>
+    <ul>
+      <li>Stable, recurring income streams</li>
+      <li>High occupancy driven by essential demand</li>
+      <li>Exposure to long-term education and migration trends</li>
+    </ul>
+    <h2>Build-to-Rent</h2>
+    <p>Build-to-Rent extends this model across the broader residential market. As cities grow and rental demand strengthens, BTR provides a scalable solution—purpose-built, professionally managed, and designed for long-term income performance. Unlike traditional development, the focus shifts from short-term sales to durable, compounding yield.</p>
+    <ul>
+      <li>Institutional-grade assets designed for hold strategies</li>
+      <li>Consistent rental income supported by population growth</li>
+      <li>Operational efficiencies through scale and professional management</li>
+    </ul>
+    <div class="art-pullquote"><p>"Australia is moving toward a more mature residential model—where income, not speculation, defines value."</p></div>
+    <h2>Our Approach to Risk</h2>
+    <p>Our focus is not simply to access these sectors—but to do so with discipline.</p>
+    <ul>
+      <li>Asset selection in high-demand locations with proven absorption</li>
+      <li>Conservative capital structures to maintain flexibility across cycles</li>
+      <li>Partnerships with experienced operators and developers</li>
+      <li>Income-first strategies, ensuring yield is supported from day one</li>
+    </ul>
+    <div class="art-takeaways">
+      <h4>Key Takeaways</h4>
+      <ul>
+        <li>BTR and PBSA represent Australia's most structurally supported income sectors</li>
+        <li>Demand is underpinned by population growth, migration, and urbanisation</li>
+        <li>Income-first strategies reduce reliance on exit pricing for returns</li>
+        <li>Disciplined asset selection and operator partnerships are critical to performance</li>
+      </ul>
+    </div>
+  </div>
+  <div class="art-sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-card-hd">About This Article</div>
+      <div class="sidebar-card-body">
+        <div class="art-info-row"><span class="aik">Category</span><span class="aiv">Sector Focus</span></div>
+        <div class="art-info-row"><span class="aik">Published</span><span class="aiv">March 2026</span></div>
+        <div class="art-info-row"><span class="aik">Read Time</span><span class="aiv">6 min read</span></div>
+        <div class="art-info-row"><span class="aik">Author</span><span class="aiv">A.P.Property</span></div>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-card-hd">Share</div>
+      <div class="sidebar-share">
+        <a href="https://www.linkedin.com/shareArticle?url=https://approperty.com.au/btr-student-accommodation.html" target="_blank" class="ssb ssb-linkedin">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7H10v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          Share on LinkedIn
+        </a>
+        <button onclick="copyLink()" class="ssb ssb-copy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy Link
+        </button>
+      </div>
+    </div>
+    <div style="background:var(--navy);padding:28px 22px">
+      <p style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.65;margin-bottom:20px">Interested in cross-border real asset investment? Speak with our team.</p>
+      <a href="contact.html" style="display:flex;align-items:center;justify-content:center;gap:10px;background:var(--gold);color:#0A1628;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:15px 20px;transition:background .2s">
+        Contact Us
+        <svg style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<section class="related-articles">
+  <div class="related-inner">
+    <div class="related-hd">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:10px;margin-bottom:14px"><span style="display:block;width:24px;height:1px;background:var(--steel)"></span>More Insights</div>
+      <h2>Related Articles</h2>
+    </div>
+    <div class="rel-grid">
+      <a href="insights.html" class="rel-card">
+        <span class="rel-cat">Market Analysis</span>
+        <h3>Australia's Housing Demand — The 1.9M Home Gap</h3>
+        <p>Supply has structurally failed to keep pace with demand. What this means for capital deployed into residential assets.</p>
+        <span class="rel-cta">Read <svg style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </a>
+      <a href="insights.html" class="rel-card">
+        <span class="rel-cat">Strategy</span>
+        <h3>Long-Term Real Assets — Investing Beyond the Cycle</h3>
+        <p>Markets move in cycles. Structural demand does not. The case for long-duration real asset positioning.</p>
+        <span class="rel-cta">Read <svg style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </a>
+      <a href="insights.html" class="rel-card">
+        <span class="rel-cat">Capital &amp; Structure</span>
+        <h3>Capital Structuring — Where Real Estate Value Is Actually Created</h3>
+        <p>The most consistent outperformance comes from how capital is structured, not the asset itself.</p>
+        <span class="rel-cta">Read <svg style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div class="ft-top">
+      <div>
+        <div class="ft-logo"><em>A.P.</em> Property</div>
+        <p class="ft-desc">A cross-border investment platform connecting capital with real assets across Asia-Pacific.</p>
+        <div class="ft-tag">Australia · Hong Kong · China · Vietnam</div>
+      </div>
+      <div class="ft-col"><h4>Markets</h4><ul><li><a href="market-australia.html">Australia</a></li><li><a href="market-hongkong.html">Hong Kong</a></li><li><a href="market-china.html">China</a></li><li><a href="market-vietnam.html">Vietnam</a></li></ul></div>
+      <div class="ft-col"><h4>Platform</h4><ul><li><a href="index.html">Home</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About</a></li><li><a href="insights.html">Insights</a></li></ul></div>
+      <div class="ft-col"><h4>Connect</h4><ul><li><a href="contact.html">Contact Us</a></li><li><a href="/cdn-cgi/l/email-protection#6211030e071122031212100d120710161b4c010d0f4c0317">Email</a></li><li><a href="https://wa.me/85246987974">WhatsApp</a></li><li><a href="https://www.linkedin.com/company/a-p-property/">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="ft-bot">
+      <span class="ft-copy">© 2025 A.P.Property Limited. All rights reserved.</span>
+      <div class="ft-legal"><a href="#">Terms</a><a href="#">Privacy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const nav = document.getElementById("nav");
+window.addEventListener("scroll", () => nav.classList.toggle("solid", scrollY > 40));
+const burger = document.getElementById("burger");
+const navLinks = document.getElementById("navLinks");
+burger.addEventListener("click", () => {
+  const open = burger.classList.toggle("open");
+  navLinks.classList.toggle("open", open);
+  document.body.classList.toggle("nav-open", open);
+  if(open) nav.classList.add("solid");
+  else if(scrollY <= 40) nav.classList.remove("solid");
+});
+navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+  burger.classList.remove("open");
+  navLinks.classList.remove("open");
+  document.body.classList.remove("nav-open");
+}));
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    document.querySelectorAll(".share-copy,.ssb-copy").forEach(b => {
+      

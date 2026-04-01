@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights — A.P.Property</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Manrope",sans-serif;background:#fff;color:#0D1117;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:root{--navy:#0A1628;--navy2:#0E1F38;--steel:#2F5B7C;--steel2:#3D6E93;--mist:#6E8FA8;--gold:#C6A86B;--gold2:#D4BC89;--white:#fff;--off:#F6F7F9;--grey:#8A929E;--ink:#0D1117;--border:#E4E7EB}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;transition:background .4s}
+nav.solid{background:rgba(10,22,40,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{font-family:"Cormorant Garamond",serif;font-size:22px;font-weight:400;letter-spacing:.05em;color:#fff;text-decoration:none}
+.logo em{font-style:italic}
+.nav-links{display:flex;align-items:center;gap:40px;list-style:none}
+.nav-links a{font-size:11.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.cur{color:#fff}
+.nav-cta{color:#fff!important;border:1px solid rgba(255,255,255,.28);padding:11px 26px;transition:background .2s!important}
+.nav-cta:hover{background:rgba(255,255,255,.08)!important}
+.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.nav-burger span{display:block;width:22px;height:1.5px;background:rgba(255,255,255,.7);transition:transform .3s,opacity .3s}
+.nav-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.hero{position:relative;padding:160px 64px 112px;background:linear-gradient(160deg,#080F1E 0%,#0C1A30 40%,#0E2040 100%);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 40%,rgba(47,91,124,.22) 0%,transparent 55%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(47,91,124,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(47,91,124,.05) 1px,transparent 1px);background-size:64px 64px}
+.hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto}
+.hero-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:32px;animation:riseIn .9s .1s both}
+.eyebrow-bar{width:32px;height:1px;background:var(--gold);opacity:.8}
+.eyebrow-text{font-size:10.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);opacity:.9}
+.hero h1{font-family:"Cormorant Garamond",serif;font-size:clamp(48px,5.5vw,82px);font-weight:300;line-height:.98;letter-spacing:-.02em;color:#fff;margin-bottom:24px;animation:riseIn .9s .15s both}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,.38)}
+.hero-sub{font-size:16px;font-weight:300;line-height:1.75;color:rgba(255,255,255,.48);max-width:560px;animation:riseIn .9s .2s both}
+@keyframes riseIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.tab-nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:72px;z-index:50}
+.tab-nav-inner{max-width:1280px;margin:0 auto;padding:0 64px;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}
+.tab-nav-inner::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:0 32px;height:64px;display:flex;align-items:center;font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);background:none;border:none;cursor:pointer;position:relative;white-space:nowrap;transition:color .2s;font-family:"Manrope",sans-serif;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--steel)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.panel-hero{background:var(--off);padding:72px 64px 64px;border-bottom:1px solid var(--border)}
+.panel-hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end}
+.panel-tag{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.panel-tag::before{content:"";width:28px;height:1px;background:var(--steel)}
+.panel-hero h2{font-family:"Cormorant Garamond",serif;font-size:clamp(32px,3.5vw,52px);font-weight:400;line-height:1.06;letter-spacing:-.01em;color:var(--ink);margin-bottom:14px}
+.panel-hero h2 em{font-style:italic;color:var(--steel)}
+.panel-hero p{font-size:15px;color:var(--grey);line-height:1.78;max-width:440px}
+.panel-sub-nav{display:flex;flex-wrap:wrap;gap:8px;align-self:end}
+.sub-tag{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:7px 16px;border:1.5px solid var(--border);color:var(--grey);background:#fff;cursor:pointer;transition:border-color .2s,color .2s,background .2s;font-family:"Manrope",sans-serif}
+.sub-tag:hover,.sub-tag.on{border-color:var(--steel);color:var(--steel);background:rgba(47,91,124,.04)}
+.panel-featured{padding:64px 64px 0;background:#fff}
+.panel-featured-inner{max-width:1280px;margin:0 auto}
+.feat-eyebrow{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.feat-eyebrow::before{content:"";width:24px;height:1px;background:var(--steel)}
+.featured-card{display:grid;grid-template-columns:1fr 1fr;min-height:440px;border:1px solid var(--border);overflow:hidden;text-decoration:none;color:inherit;transition:box-shadow .3s}
+.featured-card:hover{box-shadow:0 16px 48px rgba(0,0,0,.08)}
+.fc-img{overflow:hidden;position:relative;background:var(--navy)}
+.fc-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .5s}
+.featured-card:hover .fc-img-inner{transform:scale(1.03)}
+.fc-badge{position:absolute;bottom:20px;left:20px;z-index:2;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:5px 12px;background:rgba(10,22,40,.75);color:var(--gold);backdrop-filter:blur(6px)}
+.fc-body{padding:48px 48px;display:flex;flex-direction:column;justify-content:space-between;border-left:1px solid var(--border)}
+.fc-meta{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.fc-cat{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mist)}
+.fc-sep{width:3px;height:3px;border-radius:50%;background:var(--border)}
+.fc-date{font-size:11px;color:var(--grey);font-weight:500}
+.fc-body h3{font-family:"Cormorant Garamond",serif;font-size:clamp(24px,2.8vw,38px);font-weight:400;line-height:1.1;letter-spacing:-.01em;color:var(--ink);margin-bottom:16px}
+.fc-body p{font-size:14.5px;color:var(--grey);line-height:1.78;flex:1;margin-bottom:28px}
+.fc-foot{display:flex;align-items:center;justify-content:space-between;padding-top:20px;border-top:1px solid var(--border)}
+.fc-tags{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;background:var(--off);color:var(--grey);border:1px solid var(--border)}
+.fc-cta{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--steel);white-space:nowrap;transition:gap .2s}
+.featured-card:hover .fc-cta{gap:13px}
+.arr{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fc-cta-li{color:#0A66C2}
+.fc-cta-li svg{fill:#0A66C2;stroke:none}
+.panel-grid{padding:48px 64px 96px;background:#fff}
+.panel-grid-inner{max-width:1280px;margin:0 auto}
+.articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.art-card{background:#fff;text-decoration:none;color:inherit;display:flex;flex-direction:column;overflow:hidden;position:relative;transition:background .2s}
+.art-card:hover{background:#FAFBFD}
+.art-card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--steel),var(--mist));transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.art-card:hover::after{transform:scaleX(1)}
+.ac-img{aspect-ratio:16/9;overflow:hidden;flex-shrink:0;position:relative}
+.ac-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .45s}
+.art-card:hover .ac-img-inner{transform:scale(1.04)}
+.t-market{background:linear-gradient(135deg,#081828,#142840)}
+.t-strategy{background:linear-gradient(135deg,#0A1628,#1A3050)}
+.t-sector{background:linear-gradient(135deg,#0E1E10,#1A3420)}
+.t-capital{background:linear-gradient(135deg,#1A1408,#2A2010)}
+.t-region{background:linear-gradient(135deg,#100A1E,#201430)}
+.ac-body{padding:28px 28px 32px;flex:1;display:flex;flex-direction:column}
+.ac-cat{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;display:block}
+.ac-body h3{font-family:"Cormorant Garamond",serif;font-size:21px;font-weight:500;color:var(--ink);line-height:1.2;margin-bottom:8px;letter-spacing:-.01em}
+.ac-body p{font-size:13px;color:var(--grey);line-height:1.68;margin-bottom:16px;flex:1}
+.ac-foot{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--border);margin-top:auto}
+.ac-date{font-size:11px;color:var(--grey);font-weight:500}
+.ac-cta{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);transition:gap .2s}
+.art-card:hover .ac-cta{gap:10px}
+.ac-cta svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ac-cta-li{color:#0A66C2}
+.ac-cta-li svg{fill:#0A66C2;stroke:none;width:11px;height:11px}
+.newsletter{background:var(--navy);padding:80px 64px;position:relative;overflow:hidden}
+.newsletter::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 30% 50%,rgba(47,91,124,.22) 0%,transparent 60%)}
+.newsletter::after{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold) 30%,var(--gold) 70%,transparent);opacity:.22}
+.newsletter-inner{position:relative;z-index:1;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.newsletter h2{font-family:"Cormorant Garamond",serif;font-size:clamp(30px,4vw,52px);font-weight:300;line-height:1.08;color:#fff;margin-bottom:12px}
+.newsletter h2 em{font-style:italic;color:rgba(255,255,255,.38)}
+.nl-sub{font-size:14.5px;color:rgba(255,255,255,.42);line-height:1.7}
+.nl-form{display:flex;gap:0}
+.nl-input{flex:1;font-family:"Manrope",sans-serif;font-size:13.5px;color:var(--ink);background:#fff;border:none;padding:16px 20px;outline:none}
+.nl-input::placeholder{color:var(--grey)}
+.nl-btn{font-family:"Manrope",sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:#0A1628;border:none;padding:16px 28px;cursor:pointer;white-space:nowrap;transition:background .2s}
+.nl-btn:hover{background:var(--gold2)}
+.nl-note{font-size:11.5px;color:rgba(255,255,255,.28);margin-top:12px;line-height:1.5}
+footer{background:#050D18;padding:72px 64px 36px;border-top:1px solid rgba(255,255,255,.04)}
+.ft{max-width:1280px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:64px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:28px}
+.ft-logo{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:400;color:#fff;margin-bottom:14px}
+.ft-logo em{font-style:italic}
+.ft-desc{font-size:13px;color:rgba(255,255,255,.28);line-height:1.75;max-width:280px;margin-bottom:16px}
+.ft-tag{font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--steel)}
+.ft-col h4{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:18px}
+.ft-col ul{list-style:none}
+.ft-col li{margin-bottom:10px}
+.ft-col a{font-size:13.5px;color:rgba(255,255,255,.38);text-decoration:none;transition:color .2s}
+.ft-col a:hover{color:rgba(255,255,255,.78)}
+.ft-bot{display:flex;justify-content:space-between;align-items:center}
+.ft-copy{font-size:12px;color:rgba(255,255,255,.18)}
+.ft-legal{display:flex;gap:24px}
+.ft-legal a{font-size:12px;color:rgba(255,255,255,.18);text-decoration:none;transition:color .2s}
+.ft-legal a:hover{color:rgba(255,255,255,.45)}
+@media(max-width:1024px){
+  .panel-hero-inner{grid-template-columns:1fr;gap:36px}
+  .featured-card{grid-template-columns:1fr;min-height:auto}
+  .fc-img{min-height:260px}
+  .fc-body{border-left:none;border-top:1px solid var(--border);padding:36px 32px}
+  .articles-grid{grid-template-columns:repeat(2,1fr)}
+  .newsletter-inner{grid-template-columns:1fr;gap:40px}
+}
+@media(max-width:768px){
+  nav{padding:0 24px;height:64px}
+  .nav-burger{display:flex}
+  .nav-links{position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(8,15,28,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:36px;transform:translateX(100%);transition:transform .35s;z-index:299}
+  .nav-links.open{transform:translateX(0)}
+  .nav-links a{font-size:16px}
+  .nav-cta{border:1px solid rgba(255,255,255,.25);padding:14px 36px}
+  body.nav-open{overflow:hidden}
+  .hero{padding:120px 24px 72px}
+  .hero h1{font-size:clamp(40px,10vw,58px)}
+  .tab-nav-inner{padding:0 16px}
+  .tab-btn{padding:0 18px;font-size:10.5px}
+  .panel-hero{padding:48px 24px}
+  .panel-featured{padding:40px 24px 0}
+  .panel-grid{padding:36px 24px 72px}
+  .fc-body{padding:28px 24px}
+  .fc-body h3{font-size:clamp(22px,6vw,32px)}
+  .fc-foot{flex-direction:column;align-items:flex-start;gap:16px}
+  .articles-grid{grid-template-columns:1fr}
+  .newsletter{padding:64px 24px}
+  .nl-form{flex-direction:column}
+  footer{padding:56px 24px 32px}
+  .ft-top{grid-template-columns:1fr;gap:32px}
+  .ft-bot{flex-direction:column;align-items:flex-start;gap:16px}
+}
+
+a{color:inherit;text-decoration:none}
+a.logo,a.nav-logo{color:#fff!important;text-decoration:none!important;display:flex!important;align-items:center!important}
+.reveal,.rev,.delay-1,.delay-2,.delay-3,.d1,.d2,.d3{opacity:1!important;transform:none!important;transition:opacity .7s,transform .7s}
+
+</style>
+<style>
+.nav-dropdown { position: relative; }
+.nav-dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: rgba(10,22,40,.97); border: 1px solid rgba(255,255,255,.1); min-width: 160px; padding: 8px 0; z-index: 9999; backdrop-filter: blur(20px); }
+.nav-dropdown-menu li { list-style: none; }
+.nav-dropdown-menu a { display: block; padding: 10px 20px; color: rgba(255,255,255,.8); font-size: 13px; letter-spacing: .04em; text-decoration: none; transition: color .2s; }
+.nav-dropdown-menu a:hover { color: #fff; }
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="logo nav-logo"><img src="data:image/png;base64,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" alt="" style="height:26px;width:auto;margin-right:10px;vertical-align:middle;opacity:.92;position:relative;top:-1px"><em>A.P.</em> Property</a>
+  <ul class="nav-links" id="navLinks">
+    <li class="nav-dropdown">
+      <a href="market-australia.html" class="nav-dropdown-toggle">Markets</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="market-australia.html">Australia</a></li>
+        <li><a href="market-hongkong.html">Hong Kong</a></li>
+        <li><a href="market-china.html">China</a></li>
+        <li><a href="market-vietnam.html">Vietnam</a></li>
+      </ul>
+    </li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="insights.html"class="cur">Insights</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="nav-burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="eyebrow-bar"></span><span class="eyebrow-text">A.P.Property</span></div>
+    <h1>Market Intelligence.<br><em>Real Perspectives.</em></h1>
+    <p class="hero-sub">Analysis, commentary, and insight on cross-border real asset investment across Australia and Asia-Pacific. Updated monthly.</p>
+  </div>
+</section>
+
+<div class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" data-tab="market">Market Analysis</button>
+    <button class="tab-btn" data-tab="strategy">Strategy</button>
+    <button class="tab-btn" data-tab="sector">Sector Focus</button>
+    <button class="tab-btn" data-tab="capital">Capital &amp; Structure</button>
+  </div>
+</div>
+
+<!-- TAB 1: MARKET ANALYSIS -->
+<div class="tab-panel active" id="tab-market">
+  <div class="panel-hero">
+    <div class="panel-hero-inner">
+      <div>
+        <div class="panel-tag">Market Analysis</div>
+        <h2>What is happening.<br><em>Where capital is moving.</em></h2>
+        <p>A clear, data-backed view of macro trends, capital flows, and regional dynamics shaping real asset investment across Australia and Asia-Pacific.</p>
+      </div>
+      <div class="panel-sub-nav">
+        <button class="sub-tag on">All</button>
+        <button class="sub-tag">Macro Trends</button>
+        <button class="sub-tag">Capital Flows</button>
+        <button class="sub-tag">Regional Insights</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel-featured">
+    <div class="panel-featured-inner">
+      <div class="feat-eyebrow">Featured Analysis</div>
+      <a href="article.html" class="featured-card">
+        <div class="fc-img">
+          <div class="fc-img-inner t-market">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="22" stroke="#2F5B7C" stroke-width="1" opacity=".5"/><ellipse cx="32" cy="32" rx="22" ry="9" stroke="#6E8FA8" stroke-width=".8" opacity=".4" fill="none"/><line x1="32" y1="10" x2="32" y2="54" stroke="#6E8FA8" stroke-width=".8" opacity=".4"/><line x1="10" y1="32" x2="54" y2="32" stroke="#6E8FA8" stroke-width=".8" opacity=".4"/><circle cx="44" cy="24" r="5" fill="#C6A86B" opacity=".5"/><circle cx="22" cy="38" r="3.5" fill="#2F5B7C" opacity=".5"/><line x1="44" y1="24" x2="22" y2="38" stroke="#C6A86B" stroke-width="1" stroke-dasharray="3,4" opacity=".5"/></svg>
+          </div>
+          <div class="fc-badge">Capital Flows</div>
+        </div>
+        <div class="fc-body">
+          <div>
+            <div class="fc-meta"><span class="fc-cat">Market Analysis</span><span class="fc-sep"></span><span class="fc-date">March 2026</span></div>
+            <h3>Capital Flows — Why Asia Is Moving into Australia</h3>
+            <p>The structural drivers behind the acceleration of Asian institutional capital into Australian real assets — from regulatory tailwinds to yield compression at home. Why this isn't a trend, it's a permanent shift.</p>
+          </div>
+          <div class="fc-foot">
+            <div class="fc-tags"><span class="pill">Capital Flows</span><span class="pill">Asia-Pacific</span><span class="pill">Australia</span></div>
+            <span class="fc-cta">Read Article <svg class="arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="panel-grid">
+    <div class="panel-grid-inner">
+      <div class="articles-grid">
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-market"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><rect x="8" y="36" width="48" height="20" stroke="#2F5B7C" stroke-width="1.5" opacity=".5"/><path d="M8 36 L20 24 L32 30 L44 16 L56 20" stroke="#C6A86B" stroke-width="1.5" fill="none" opacity=".7" stroke-linecap="round"/><circle cx="44" cy="16" r="3" fill="#C6A86B" opacity=".6"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Macro Trends</span><h3>Australia Is a Yield Engine Backed by Sovereign Stability</h3><p>Why Australia's fundamentals — rule of law, currency strength, and institutional depth — make it the anchor allocation for Asian capital seeking real yield.</p><div class="ac-foot"><span class="ac-date">February 2026</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-market"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><rect x="8" y="8" width="48" height="48" rx="2" stroke="#2F5B7C" stroke-width="1.5" opacity=".4"/><rect x="16" y="40" width="8" height="16" fill="#2F5B7C" opacity=".3"/><rect x="28" y="28" width="8" height="28" fill="#6E8FA8" opacity=".3"/><rect x="40" y="20" width="8" height="36" fill="#C6A86B" opacity=".3"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Regional Insights</span><h3>Australia's Housing Demand — The 1.9M Home Gap</h3><p>Supply has structurally failed to keep pace with demand for over a decade. What a 1.9 million home shortfall means for capital deployed into residential assets.</p><div class="ac-foot"><span class="ac-date">January 2026</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-region"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="20" stroke="#2F5B7C" stroke-width="1.5" opacity=".5"/><path d="M16 32 Q24 20 32 24 Q40 28 48 18" stroke="#6E8FA8" stroke-width="1.5" fill="none" opacity=".7" stroke-linecap="round"/><circle cx="48" cy="18" r="3.5" fill="#C6A86B" opacity=".6"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Regional Insights</span><h3>Vietnam's Infrastructure Moment — Regional Capital Reallocation</h3><p>Vietnam is entering its most significant infrastructure investment cycle in a generation. The window for early-positioned capital is narrowing fast.</p><div class="ac-foot"><span class="ac-date">November 2025</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-market"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><path d="M8 48 L20 32 L32 36 L44 20 L56 24" stroke="#C6A86B" stroke-width="2" fill="none" opacity=".6" stroke-linecap="round"/><circle cx="8" cy="48" r="3" fill="#6E8FA8" opacity=".5"/><circle cx="56" cy="24" r="3" fill="#C6A86B" opacity=".6"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Capital Flows</span><h3>The Global Shift into Living Sector Assets</h3><p>Institutional capital is rotating out of traditional asset classes and into living sector real estate at a pace not seen since the GFC. Here's why — and where it's going.</p><div class="ac-foot"><span class="ac-date">September 2025</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: STRATEGY -->
+<div class="tab-panel" id="tab-strategy">
+  <div class="panel-hero">
+    <div class="panel-hero-inner">
+      <div>
+        <div class="panel-tag">Strategy</div>
+        <h2>How we think.<br><em>How we deploy capital.</em></h2>
+        <p>Our investment philosophy, framework, and approach to cross-border real asset allocation — the intellectual edge behind every deal we structure.</p>
+      </div>
+      <div class="panel-sub-nav">
+        <button class="sub-tag on">All</button>
+        <button class="sub-tag">Investment Framework</button>
+        <button class="sub-tag">Capital Structuring</button>
+        <button class="sub-tag">Portfolio Strategy</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel-featured">
+    <div class="panel-featured-inner">
+      <div class="feat-eyebrow">Featured Strategy Piece</div>
+      <a href="article.html" class="featured-card">
+        <div class="fc-img">
+          <div class="fc-img-inner t-strategy">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect x="8" y="8" width="48" height="48" rx="1" stroke="#2F5B7C" stroke-width="1" opacity=".4"/><line x1="8" y1="22" x2="56" y2="22" stroke="#6E8FA8" stroke-width=".8" opacity=".35"/><line x1="8" y1="42" x2="56" y2="42" stroke="#6E8FA8" stroke-width=".8" opacity=".35"/><line x1="22" y1="8" x2="22" y2="56" stroke="#6E8FA8" stroke-width=".8" opacity=".35"/><line x1="42" y1="8" x2="42" y2="56" stroke="#6E8FA8" stroke-width=".8" opacity=".35"/><circle cx="32" cy="32" r="7" fill="#C6A86B" opacity=".35"/><circle cx="32" cy="32" r="3" fill="#C6A86B" opacity=".6"/></svg>
+          </div>
+          <div class="fc-badge">Case Study</div>
+        </div>
+        <div class="fc-body">
+          <div>
+            <div class="fc-meta"><span class="fc-cat">Strategy</span><span class="fc-sep"></span><span class="fc-date">February 2026</span></div>
+            <h3>From $50M to $1.8B — How One Deal Changed What We Know About Structuring Capital</h3>
+            <p>A single developer came to us with an idea and a $50M budget. What followed was a masterclass in cross-border capital structuring, investor alignment, and long-term value creation. Here's what we learned.</p>
+          </div>
+          <div class="fc-foot">
+            <div class="fc-tags"><span class="pill">Case Study</span><span class="pill">Capital Structuring</span><span class="pill">Australia</span></div>
+            <span class="fc-cta">Read Article <svg class="arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="panel-grid">
+    <div class="panel-grid-inner">
+      <div class="articles-grid">
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-strategy"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><path d="M32 8 L56 32 L32 56 L8 32 Z" stroke="#2F5B7C" stroke-width="1.5" opacity=".5" fill="none"/><path d="M32 18 L46 32 L32 46 L18 32 Z" stroke="#6E8FA8" stroke-width="1" opacity=".4" fill="none"/><circle cx="32" cy="32" r="5" fill="#C6A86B" opacity=".5"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Investment Framework</span><h3>The Cross-Border Investment Playbook</h3><p>The step-by-step framework A.P.Property uses to identify, structure, and execute cross-border real asset transactions — from origination to exit.</p><div class="ac-foot"><span class="ac-date">January 2026</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-strategy"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><rect x="10" y="20" width="44" height="30" rx="1" stroke="#2F5B7C" stroke-width="1.5" opacity=".5"/><rect x="18" y="28" width="10" height="14" fill="#2F5B7C" opacity=".25"/><rect x="32" y="24" width="10" height="18" fill="#6E8FA8" opacity=".25"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Portfolio Strategy</span><h3>Long-Term Real Assets — Investing Beyond the Cycle</h3><p>Why the most consistent returns in real assets come from ignoring the cycle entirely and focusing on structural demand drivers that don't move in quarters.</p><div class="ac-foot"><span class="ac-date">November 2025</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-strategy"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="18" stroke="#2F5B7C" stroke-width="1.5" opacity=".5"/><path d="M32 14 L38 26 L52 28 L42 38 L44 52 L32 46 L20 52 L22 38 L12 28 L26 26 Z" stroke="#C6A86B" stroke-width="1" opacity=".4" fill="none"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Portfolio Strategy</span><h3>Portfolio Construction Across Debt and Equity</h3><p>How to build a cross-border real asset portfolio that balances income, growth, and capital preservation across debt and equity tranches.</p><div class="ac-foot"><span class="ac-date">September 2025</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-strategy"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><path d="M12 48 L12 28 L24 20 L36 28 L48 16 L52 20" stroke="#6E8FA8" stroke-width="1.5" fill="none" opacity=".6" stroke-linecap="round"/><line x1="12" y1="48" x2="52" y2="48" stroke="#2F5B7C" stroke-width="1" opacity=".4"/><circle cx="48" cy="16" r="3.5" fill="#C6A86B" opacity=".6"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Capital Structuring</span><h3>Capital Preservation and Yield Strategy</h3><p>For investors whose priority is capital protection — a practical guide to structuring real asset positions for downside protection and reliable yield.</p><div class="ac-foot"><span class="ac-date">August 2025</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: SECTOR FOCUS -->
+<div class="tab-panel" id="tab-sector">
+  <div class="panel-hero">
+    <div class="panel-hero-inner">
+      <div>
+        <div class="panel-tag">Sector Focus</div>
+        <h2>Where we invest.<br><em>Where the opportunity is strongest.</em></h2>
+        <p>Clear, focused sector analysis with no noise. Each piece answers one question: why does this sector deserve institutional capital right now?</p>
+      </div>
+      <div class="panel-sub-nav">
+        <button class="sub-tag on">All</button>
+        <button class="sub-tag">Living Sector</button>
+        <button class="sub-tag">Credit</button>
+        <button class="sub-tag">Development</button>
+        <button class="sub-tag">Infrastructure</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel-featured">
+    <div class="panel-featured-inner">
+      <div class="feat-eyebrow">Featured Sector Piece</div>
+      <a href="https://www.linkedin.com/company/a-p-property/" target="_blank" class="featured-card">
+        <div class="fc-img">
+          <div class="fc-img-inner t-sector">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect x="8" y="16" width="48" height="40" rx="1" stroke="#2F5B7C" stroke-width="1" opacity=".5"/><rect x="16" y="24" width="10" height="10" fill="#2F5B7C" opacity=".25"/><rect x="30" y="24" width="10" height="10" fill="#2F5B7C" opacity=".25"/><rect x="44" y="24" width="10" height="10" fill="#2F5B7C" opacity=".25"/><rect x="16" y="38" width="10" height="10" fill="#C6A86B" opacity=".25"/><rect x="30" y="38" width="10" height="10" fill="#2F5B7C" opacity=".25"/><path d="M8 16 L32 8 L56 16" stroke="#6E8FA8" stroke-width="1" opacity=".4" fill="none"/></svg>
+          </div>
+          <div class="fc-badge">Living Sector</div>
+        </div>
+        <div class="fc-body">
+          <div>
+            <div class="fc-meta"><span class="fc-cat">Sector Focus</span><span class="fc-sep"></span><span class="fc-date">March 2026</span></div>
+            <h3>Build-to-Rent in Australia — Why Institutional Capital Is Moving Fast</h3>
+            <p>BTR is no longer emerging in Australia — it has arrived. The policy environment has shifted, yield metrics stack up, and the capital window for early-positioned investors is narrowing faster than most expect.</p>
+          </div>
+          <div class="fc-foot">
+            <div class="fc-tags"><span class="pill">BTR</span><span class="pill">Living Sector</span><span class="pill">Australia</span></div>
+            <span class="fc-cta fc-cta-li"><svg viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7H10v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Read on LinkedIn</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="panel-grid">
+    <div class="panel-grid-inner">
+      <div class="articles-grid">
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-sector"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><rect x="12" y="20" width="40" height="32" rx="1" stroke="#2F5B7C" stroke-width="1.5" opacity=".5"/><rect x="20" y="28" width="8" height="8" fill="#2F5B7C" opacity=".25"/><rect x="32" y="28" width="8" height="8" fill="#2F5B7C" opacity=".25"/><path d="M12 20 L32 12 L52 20" stroke="#6E8FA8" stroke-width="1" opacity=".5" fill="none"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Living Sector</span><h3>Student Accommodation — Structural Demand and Stable Yield</h3><p>Australia's international student demand has recovered strongly. Purpose-built student accommodation offers one of the most resilient yield profiles in the living sector.</p><div class="ac-foot"><span class="ac-date">February 2026</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-capital"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="18" stroke="#C6A86B" stroke-width="1.5" opacity=".4"/><path d="M22 32 Q28 24 32 28 Q36 32 42 24" stroke="#C6A86B" stroke-width="1.5" fill="none" opacity=".7" stroke-linecap="round"/><circle cx="22" cy="32" r="3" fill="#C6A86B" opacity=".5"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Credit</span><h3>Residential Credit — The Most Mispriced Opportunity in Real Assets</h3><p>Senior secured residential credit in Australia offers yield profiles that most institutional investors are ignoring. Here's why — and how to access it correctly.</p><div class="ac-foot"><span class="ac-date">January 2026</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-sector"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><rect x="8" y="28" width="48" height="28" rx="1" stroke="#2F5B7C" stroke-width="1.5" opacity=".5"/><path d="M8 28 L32 14 L56 28" stroke="#6E8FA8" stroke-width="1" opacity=".5" fill="none"/><rect x="20" y="36" width="10" height="20" fill="#2F5B7C" opacity=".2"/><rect x="34" y="36" width="10" height="20" fill="#2F5B7C" opacity=".2"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Development</span><h3>Modular Construction — The Efficiency Advantage</h3><p>Off-site construction is reshaping development economics — faster delivery, lower cost variance, and better yield outcomes for developers and investors alike.</p><div class="ac-foot"><span class="ac-date">November 2025</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-region"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><path d="M8 48 L8 36 L20 28 L32 34 L44 22 L56 26 L56 48 Z" stroke="#2F5B7C" stroke-width="1.5" opacity=".5" fill="rgba(47,91,124,.1)"/><circle cx="44" cy="22" r="4" fill="#C6A86B" opacity=".6"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Infrastructure</span><h3>Emerging Infrastructure — Vietnam, EV Networks, and Logistics</h3><p>Three infrastructure themes converging in Asia-Pacific that represent structural, not cyclical, investment opportunities for patient capital.</p><div class="ac-foot"><span class="ac-date">October 2025</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: CAPITAL & STRUCTURE -->
+<div class="tab-panel" id="tab-capital">
+  <div class="panel-hero">
+    <div class="panel-hero-inner">
+      <div>
+        <div class="panel-tag">Capital &amp; Structure</div>
+        <h2>How deals are built.<br><em>How capital flows.</em></h2>
+        <p>The mechanics behind institutional real asset transactions — capital stacks, fund structures, governance, and how value is actually created at the structuring stage.</p>
+      </div>
+      <div class="panel-sub-nav">
+        <button class="sub-tag on">All</button>
+        <button class="sub-tag">Capital Stack</button>
+        <button class="sub-tag">Structures</button>
+        <button class="sub-tag">Governance</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel-featured">
+    <div class="panel-featured-inner">
+      <div class="feat-eyebrow">Featured Piece</div>
+      <a href="https://www.linkedin.com/company/a-p-property/" target="_blank" class="featured-card">
+        <div class="fc-img">
+          <div class="fc-img-inner t-capital">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><circle cx="18" cy="24" r="5" fill="#C6A86B" opacity=".5"/><circle cx="46" cy="24" r="5" fill="#2F5B7C" opacity=".5"/><line x1="18" y1="24" x2="46" y2="24" stroke="#C6A86B" stroke-width="1.5" stroke-dasharray="3,4" opacity=".6"/><circle cx="32" cy="42" r="4" fill="#6E8FA8" opacity=".5"/><line x1="18" y1="24" x2="32" y2="42" stroke="#6E8FA8" stroke-width="1" stroke-dasharray="3,5" opacity=".4"/><line x1="46" y1="24" x2="32" y2="42" stroke="#6E8FA8" stroke-width="1" stroke-dasharray="3,5" opacity=".4"/></svg>
+          </div>
+          <div class="fc-badge">Capital Corridor</div>
+        </div>
+        <div class="fc-body">
+          <div>
+            <div class="fc-meta"><span class="fc-cat">Capital &amp; Structure</span><span class="fc-sep"></span><span class="fc-date">March 2026</span></div>
+            <h3>What Most Investors Get Wrong About the Hong Kong–Australia Capital Corridor</h3>
+            <p>The structural assumptions that kill otherwise good cross-border deals — and how to reframe them at the structuring stage to protect all parties and create genuine alignment.</p>
+          </div>
+          <div class="fc-foot">
+            <div class="fc-tags"><span class="pill">Capital Corridor</span><span class="pill">HK to AU</span><span class="pill">Structuring</span></div>
+            <span class="fc-cta fc-cta-li"><svg viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7H10v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Read on LinkedIn</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="panel-grid">
+    <div class="panel-grid-inner">
+      <div class="articles-grid">
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-capital"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><rect x="8" y="44" width="48" height="10" fill="#C6A86B" opacity=".15" stroke="#C6A86B" stroke-width="1" opacity=".4"/><rect x="8" y="32" width="48" height="10" fill="#6E8FA8" opacity=".12" stroke="#6E8FA8" stroke-width="1" opacity=".4"/><rect x="8" y="20" width="48" height="10" fill="#2F5B7C" opacity=".12" stroke="#2F5B7C" stroke-width="1" opacity=".4"/><rect x="8" y="10" width="48" height="8" fill="#2F5B7C" opacity=".2" stroke="#2F5B7C" stroke-width="1" opacity=".5"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Capital Stack</span><h3>Inside a $1.8B Capital Stack — How the Deal Was Actually Built</h3><p>A granular breakdown of how A.P.Property structured a $1.8B cross-border transaction — and why each layer of the stack was placed where it was.</p><div class="ac-foot"><span class="ac-date">February 2026</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-capital"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><rect x="14" y="14" width="16" height="20" rx="1" stroke="#2F5B7C" stroke-width="1.5" opacity=".5"/><rect x="34" y="22" width="16" height="20" rx="1" stroke="#6E8FA8" stroke-width="1.5" opacity=".5"/><rect x="20" y="36" width="16" height="14" rx="1" stroke="#C6A86B" stroke-width="1" opacity=".5"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Structures</span><h3>LPF, Trusts, and SPVs — Institutional Setup Explained</h3><p>The three most commonly used vehicles for cross-border real asset investment — when to use each, how they're taxed, and how they protect investors on both sides.</p><div class="ac-foot"><span class="ac-date">January 2026</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-capital"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><path d="M32 10 L54 22 L54 42 L32 54 L10 42 L10 22 Z" stroke="#C6A86B" stroke-width="1.5" opacity=".4" fill="none"/><path d="M32 20 L44 27 L44 37 L32 44 L20 37 L20 27 Z" stroke="#2F5B7C" stroke-width="1" opacity=".4" fill="none"/><circle cx="32" cy="32" r="5" fill="#C6A86B" opacity=".4"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Governance</span><h3>Aligning Investors, Developers, and Operators</h3><p>The most common point of failure in real asset transactions isn't the asset — it's misaligned incentives. How to structure governance that actually works for all parties.</p><div class="ac-foot"><span class="ac-date">November 2025</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+        <a href="article.html" class="art-card">
+          <div class="ac-img"><div class="ac-img-inner t-capital"><svg width="44" height="44" viewBox="0 0 64 64" fill="none"><path d="M16 48 L16 30 L28 22 L40 30 L52 20" stroke="#C6A86B" stroke-width="2" fill="none" opacity=".6" stroke-linecap="round"/><circle cx="16" cy="30" r="3" fill="#2F5B7C" opacity=".5"/><circle cx="52" cy="20" r="4" fill="#C6A86B" opacity=".6"/></svg></div></div>
+          <div class="ac-body"><span class="ac-cat">Capital Stack</span><h3>Where Value Is Created in the Capital Stack</h3><p>Most investors look at the asset. The sophisticated ones look at the stack. How to identify where genuine value creation happens — and how to position for it.</p><div class="ac-foot"><span class="ac-date">October 2025</span><span class="ac-cta">Read <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px;margin-bottom:20px"><span style="display:block;width:28px;height:1px;background:var(--gold)"></span>Monthly Insights</div>
+      <h2>Stay Ahead of<br><em>the Market.</em></h2>
+      <p class="nl-sub" style="margin-top:14px">Monthly intelligence on cross-border real assets, capital flows, and market opportunities — direct to your inbox.</p>
+    </div>
+    <div>
+      <div class="nl-form"><input type="email" class="nl-input" placeholder="Your email address"><button class="nl-btn">Subscribe</button></div>
+      <p class="nl-note">No spam. One email per month. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div class="ft-top">
+      <div>
+        <div class="ft-logo"><em>A.P.</em> Property</div>
+        <p class="ft-desc">A cross-border investment platform connecting capital with real assets across Asia-Pacific.</p>
+        <div class="ft-tag">Australia · Hong Kong · China · Vietnam</div>
+      </div>
+      <div class="ft-col"><h4>Markets</h4><ul>
+        <li><a href="market-australia.html">Australia</a></li>
+        <li><a href="market-hongkong.html">Hong Kong</a></li>
+        <li><a href="market-china.html">China</a></li>
+        <li><a href="market-vietnam.html">Vietnam</a></li>
+      </ul></div>
+      <div class="ft-col"><h4>Platform</h4><ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="insights.html">Insights</a></li>
+      </ul></div>
+      <div class="ft-col"><h4>Connect</h4><ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#9ae9fbf6ffe9dafbeaeae8f5eaffe8eee3b4f9f5f7b4fbef">Email</a></li>
+        <li><a href="https://wa.me/85246987974">WhatsApp</a></li>
+        <li><a href="https://www.linkedin.com/company/a-p-property/">LinkedIn</a></li>
+      </ul></div>
+    </div>
+    <div class="ft-bot">
+      <span class="ft-copy">© 2025 A.P.Property Limited. All rights reserved.</span>
+      <div class="ft-legal"><a href="#">Terms &amp; Conditions</a><a href="#">Privacy Policy</a></div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const nav = document.getElementById("nav");
+window.addEventListener("scroll", () => nav.classList.toggle("solid", scrollY > 40));
+const burger = document.getElementById("burger");
+const navLinks = document.getElementById("navLinks");
+burger.addEventListener("click", () => {
+  const open = burger.classList.toggle("open");
+  navLinks.classList.toggle("open", open);
+  document.body.classList.toggle("nav-open", open);
+  if(open) nav.classList.add("solid");
+  else if(scrollY <= 40) nav.classList.remove("solid");
+});
+navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+  burger.classList.remove("open");
+  navLinks.classList.remove("open");
+  document.body.classList.remove("nav-open");
+}));
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+    document.querySelector(".tab-nav").scrollIntoView({behavior:"smooth", block:"nearest"});
+  });
+});
+document.querySelectorAll(".sub-tag").forEach(tag => {
+  tag.addEventListener("click", () => {
+    tag.closes
