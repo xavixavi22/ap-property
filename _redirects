@@ -1,0 +1,9 @@
+# Geo-based redirects
+# HK visitors → HK market page
+/   /market-hongkong.html   302   Country=HK
+
+# AU visitors → AU market page  
+/   /market-australia.html  302   Country=AU
+
+# Everyone else → homepage
+/   /index.html             200
